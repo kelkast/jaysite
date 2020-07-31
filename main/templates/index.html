@@ -26,6 +26,24 @@
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+
+    <style>
+        #div1 {
+            width: 380px;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+            background: lightyellow;
+        }
+        #div2 {
+            width: 380px;
+            height:100px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+            background: crimson;
+        }
+    </style>
+
 </head>
 <body>
     <!-- ? Preloader Start -->
@@ -258,10 +276,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div id="div1" ondrop="dropIt2(event)" ondragover="allowDrop(event)" class="col-lg-3 col-md-6 col-sm-6">
                         <div class="single-cat">
                             <div class="cat-icon">
-                                <img src="{% static 'main/img/icon1.png' %}" alt="">
+                                <img id="icon_popup_1" draggable="true" ondragstart="dragStart(event)" src="{% static 'main/img/icon1.png' %}" alt="">
                             </div>
                             <div class="cat-cap">
                                 <h5><a href="services.html">Quality</a></h5>
@@ -302,6 +320,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="div2" ondrop="dropIt(event)" ondragover="allowDrop(event)"></div>
+
                 </div>
             </div>
         </div>
@@ -763,6 +784,39 @@
     <script src="{% static 'main/js/plugins.js' %}"></script>
     <script src="{% static 'main/js/main.js' %}"></script>
 
-    
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <script>
+        function dragStart(ev){
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function allowDrop(ev){
+            ev.preventDefault();
+        }
+
+        function dropIt(ev){
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+
+            // append to the text input
+            let icon = document.getElementById('icon_popup_1');
+            icon.value= icon.value + ' ' + dataId;
+        }
+
+        function dropIt2(ev){
+            ev.preventDefault();
+            var dat = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+
+            // remove from text input
+            let icon = document.getElementById('icon_popup_1');
+            icon.value = icon.value.replace(dataId,'');
+        }
+
+    </script>
+
     </body>
 </html>
